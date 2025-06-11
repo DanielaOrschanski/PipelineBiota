@@ -22,7 +22,7 @@ reportMasAbundantes <- function(patient_dir, MetadataB) {
     #nivel <- niveles[1]
     print(nivel)
 
-    Biomarcadores_SubEspecies_abundantes <- as.data.frame(read_excel(sprintf("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/%sAbundantes_RangoEtario_sinoutliers.xlsx", nivel)))
+    Biomarcadores_SubEspecies_abundantes <- as.data.frame(read_excel(sprintf("%s/%sAbundantes_RangoEtario_sinoutliers.xlsx", pipe_data, nivel)))
     colnames(Biomarcadores_SubEspecies_abundantes)[1] <- nivel
     Biomarcadores_SubEspecies_abundantes[,1] <- gsub("\\.", " ", Biomarcadores_SubEspecies_abundantes[,1])
     length(unique(Biomarcadores_SubEspecies_abundantes$Species))
@@ -51,8 +51,8 @@ reportMasAbundantes <- function(patient_dir, MetadataB) {
     }
     
     if(!(file.exists(sprintf("%s/trimmed/AR_Bo__%s_%s.xlsx", patient_dir, nivel, source)))) {
-      otus <- as.data.frame(read_excel(paste(patient_dir, "/trimmed/TablaOTUS_", id, "_trimmed_", source, ".xlsx", sep="")))
-      group_TaxonomicLevels(patient_dir, otus, source= "KRAKEN")
+      otus <- as.data.frame(read_excel(paste(patient_dir, "/trimmed/Resultados_KRAKEN/TablaOTUS_", id, "Bo_", source, ".xlsx", sep="")))
+      group_TaxonomicLevels(patients_dir = patient_dir, tabla_otus = otus, source= "KRAKEN", de_host = "Bowtie", conEukaryota = FALSE)
     }
     #-----------------------------------------------------------------------------
 
@@ -151,7 +151,7 @@ reportMasAbundantes <- function(patient_dir, MetadataB) {
     #Recomendacion y Funcion solo de especies para el reporte completo: -------------------------------------------------------------
 
     if(nivel == "Species") {
-      Especies_Recomendaciones <- as.data.frame(read_excel("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/topTax-Recomendaciones.xlsx", sheet=1))
+      Especies_Recomendaciones <- as.data.frame(read_excel(sprintf("%s/topTax-Recomendaciones.xlsx", pipe_data), sheet=1))
       paraCompleto <- Especies_Recomendaciones[which(Especies_Recomendaciones$Species %in% df_rango_medico$Species), c(1,2,3,5)]
       mensaje_paraCompleto <- c()
       v=1

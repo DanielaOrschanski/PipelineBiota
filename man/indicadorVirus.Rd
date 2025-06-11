@@ -4,12 +4,12 @@
 \alias{indicadorVirus}
 \title{Indicador Virus}
 \usage{
-indicadorVirus(id, MetadataB)
+indicadorVirus(patient_dir, MetadataB)
 }
 \arguments{
-\item{id}{patient's id}
-
 \item{MetadataB}{dataframe that contains the metadata information. id must be within Metadata$ID.}
+
+\item{id}{patient's id}
 }
 \value{
 mensaje_virus (message with the conclusion).

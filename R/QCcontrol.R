@@ -13,7 +13,6 @@
 #' @param FastQC_trimmed if it is set to TRUE the QC report will be generated using QC metrics from trimmed FASTQ files instead of the raw FASTQ files.
 #' @return qc_metrics is  dataframe that records qc mean, %Q30, number of sequences, percentage of CG, sequnece length and mapped metrics.
 #' @export
-#' @example QCcontrol(patients_dir = "~/Daniela/Biota/Muestras/73m", de_host ="Bowtie", generate_QCReport_Individual = FALSE, generate_QCReport_Grupal = FALSE, FastQC_trimmed = TRUE)
 
 QCcontrol <- function(patients_dir, de_host, generate_QCReport_Individual = FALSE, generate_QCReport_Grupal = TRUE, FastQC_trimmed = FALSE ) {
 

@@ -16,7 +16,7 @@ indicadorTipoPiel <- function(patient_dir, MetadataB) {
   patients_dir <- dirname(patient_dir)
 
   #Biomarcadores_PielGrasa <- read_excel("~/Daniela/Biota/PipelineBiota/data/Biomarcadores_TipodePiel_sinoutliers.xlsx")
-  Biomarcadores_PielGrasa <- read_excel("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/NEW-Biomarcadores_TipodePiel_sinoutliers.xlsx")
+  Biomarcadores_PielGrasa <- read_excel(sprintf("%s/NEW-Biomarcadores_TipodePiel_sinoutliers.xlsx", pipe_data))
   #Biomarcadores_PielGrasa <- read_excel("~/Daniela/Biota/PipelineBiota/data/NEW-sinfagos-Biomarcadores_TipodePiel_sinoutliers.xlsx")
 
 
@@ -31,7 +31,7 @@ indicadorTipoPiel <- function(patient_dir, MetadataB) {
 
   otus <-  read_excel(sprintf("%s/trimmed/Resultados_KRAKEN/TablaOTUS_%sBo_KRAKEN.xlsx", patient_dir, id))
   #load("~/Daniela/Biota/Muestras/73m/SubEspecies_AUSAR.RData")
-  load("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/SubSpecies_AUSAR.RData")
+  load(sprintf("%s/SubSpecies_AUSAR.RData", pipe_data))
   
 
   # me quedo con las 138 subespecies y calculo AR -------------------------

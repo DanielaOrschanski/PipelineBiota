@@ -18,5 +18,5 @@ path for 2 reports
 Process de patient given from the raw fastq file until 2 reports with the results.
 }
 \examples{
-RunPipelineIndividual(patient_dir = "~/Daniela/Biota/Muestras/73m/114")
+RunPipelineIndividual(patient_dir = "/media/4tb2/Daniela/Biota/Muestras/180")
 }

@@ -16,7 +16,9 @@
     write("",file = sprintf("%s/PipelineBiota-Softwares/path_to_soft.txt", libPath))
   }
   
-  omicsdo_sof <<- sprintf("%s/PipelineBiota-Softwares", dirname(system.file(package = "PipelineBiota")))
+  pipe_sof <<- sprintf("%s/PipelineBiota-Softwares", dirname(system.file(package = "PipelineBiota")))
+  pipe_data <<- sprintf("%s/data", system.file(package = "PipelineBiota"))
+  pipe_data <<- "/media/4tb2/Daniela/Biota/PipelineBiota/data"
   
   #check_packages()
   

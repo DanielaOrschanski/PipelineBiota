@@ -10,21 +10,21 @@
 #' @return mensaje_virus (message with the conclusion).
 #' @export
 
-indicadorVirus <- function(id, MetadataB) {
+indicadorVirus <- function(patient_dir, MetadataB) {
 
   nivel <- "Species"
-  Biomarcadores_Especies_abundantes <- as.data.frame(read_excel(sprintf("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/%sAbundantes_RangoEtario_sinoutliers.xlsx", nivel)))
+  Biomarcadores_Especies_abundantes <- as.data.frame(read_excel(sprintf("%s/%sAbundantes_RangoEtario_sinoutliers.xlsx", pipe_data, nivel)))
   colnames(Biomarcadores_Especies_abundantes)[1] <- nivel
   Biomarcadores_Especies_abundantes[,1] <- gsub("\\.", " ", Biomarcadores_Especies_abundantes[,1])
 
   #pedir id
   #id <- readline(prompt = "Ingrese el ID del paciente que desea analizar: ")
-  list_dirs <- list.dirs(patients_dir, recursive = FALSE, full.names = TRUE)
-  patient_dir <- path.expand(sprintf("%s/%s", patients_dir, id))
-
-  if(!(patient_dir %in% list_dirs)) {
-    return("This id is not on your patients folder")
-  }
+  #list_dirs <- list.dirs(patients_dir, recursive = FALSE, full.names = TRUE)
+  #patient_dir <- path.expand(sprintf("%s/%s", patients_dir, id))
+  id <- basename(patient_dir)
+  #if(!(patient_dir %in% list_dirs)) {
+  #  return("This id is not on your patients folder")
+  #}
 
   otus <-  read_excel(sprintf("%s/trimmed/Resultados_KRAKEN/TablaOTUS_%sBo_KRAKEN.xlsx", patient_dir, id))
   #otus <-  read_excel(sprintf("%s/OTUs_84Pacientes_KRAKEN.xlsx", patients_dir))
@@ -69,7 +69,7 @@ indicadorVirus <- function(id, MetadataB) {
 
   #Por cada virus cuyo indicador diga Riesgo? se la agrega su funcion y su recomendacion: -----------------------
 
-  Recomendacion_Viruses <- as.data.frame(read_excel("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/Viruses_Recomendaciones.xlsx"))
+  Recomendacion_Viruses <- as.data.frame(read_excel(sprintf("%s/Viruses_Recomendaciones.xlsx", pipe_data)))
   paraCompleto <- Recomendacion_Viruses[which(Recomendacion_Viruses$Species %in% AR_virus_biom$Species), c("Species", "Que hace", "Recomendaciones")]
   mensaje_paraCompleto <- c()
 

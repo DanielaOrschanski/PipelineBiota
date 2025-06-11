@@ -4,12 +4,12 @@
 \alias{indicadorFagos}
 \title{Indicador Fagos}
 \usage{
-indicadorFagos(id, MetadataB)
+indicadorFagos(patient_dir, MetadataB)
 }
 \arguments{
-\item{id}{patient's id}
-
 \item{MetadataB}{dataframe that contains the metadata information. id must be within Metadata$ID.}
+
+\item{id}{patient's id}
 }
 \value{
 mensaje_fagos (message with the prediction).

@@ -10,7 +10,6 @@
 #' @import data.table
 #' @import openxlsx
 #' @import qpdf
-#' @example (path_metadata = "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/Metadata-Completa-SinLimpiar.xlsx")
 
 generateSimpleReport <- function(patient_dir, path_metadata) {
 
@@ -20,7 +19,7 @@ generateSimpleReport <- function(patient_dir, path_metadata) {
 
   caratula(patient_dir = patient_dir, path_metadata = path_metadata)
   indice(patient_dir = patient_dir,  path_metadata = path_metadata)
-  contenido(patient_dir = patient_dir,  path_metadata = path_metadata)
+  contenido_simple(patient_dir = patient_dir,  path_metadata = path_metadata)
 
   contenido_file <- sprintf("%s/contenido_MR_%s.pdf", patient_dir, id_mr)
   caratula_file <- sprintf("%s/Caratula_MR_%s.pdf", patient_dir, id_mr)
@@ -53,6 +52,9 @@ generateSimpleReport <- function(patient_dir, path_metadata) {
   #-----------------------
 
   file.remove(sprintf("%s/MR_%s.log", patient_dir, id_mr))
+  file.remove(contenido_file)
+  file.remove(caratula_file)
+  file.remove(indice_file)
   
   return(message(sprintf("The report will be find in %s", output_file)))
 
@@ -65,7 +67,19 @@ generateSimpleReport <- function(patient_dir, path_metadata) {
 ################################################################################################
 
 
-
+#' @title Generate Results' Report - Section Caratula
+#' @description It generates the report in pdf format that register all the predictions and the analizes of the microbiome composition of a determined patient.
+#' @param patients_dir indicated the patient directory that will be analyzed.
+#' @param path_metadata path that indicates were the Metadata excel is located
+#' @export
+#' @import rmarkdown
+#' @import ggplot2
+#' @import kableExtra
+#' @import gridExtra
+#' @import readxl
+#' @import data.table
+#' @import openxlsx
+#' @import qpdf
 caratula <- function(patient_dir, path_metadata) {
 
   id <- basename(patient_dir)
@@ -139,11 +153,11 @@ output:
   pdf_document:
     latex_engine: xelatex
     includes:
-      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/header.tex"
+      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota/data/header.tex"
   html_document:
     df_print: paged
     includes:
-      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/header.html"
+      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota/data/header.html"
 editor_options:
   markdown:
     wrap: 72
@@ -153,7 +167,7 @@ editor_options:
 ```
 ', id, nombre_paciente, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir,patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir)
 
-  rmd_file <- sprintf("%s/ReportResults_Biota_ID%s.Rmd", patient_dir, id)
+  rmd_file <- sprintf("%s/indice_MR_%s.Rmd", patient_dir, id)
   writeLines(rmd_content, con = rmd_file)
 
   library(stringr)
@@ -167,7 +181,19 @@ editor_options:
 
 #####################################################################
 ##############################################################
-
+#' @title Generate Results' Report - Section Indice
+#' @description It generates the report in pdf format that register all the predictions and the analizes of the microbiome composition of a determined patient.
+#' @param patients_dir indicated the patient directory that will be analyzed.
+#' @param path_metadata path that indicates were the Metadata excel is located
+#' @export
+#' @import rmarkdown
+#' @import ggplot2
+#' @import kableExtra
+#' @import gridExtra
+#' @import readxl
+#' @import data.table
+#' @import openxlsx
+#' @import qpdf
 indice <- function(patient_dir, path_metadata) {
 
   id <- basename(patient_dir)
@@ -273,11 +299,11 @@ output:
   pdf_document:
     latex_engine: xelatex
     includes:
-      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/header.tex"
+      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota/data/header.tex"
   html_document:
     df_print: paged
     includes:
-      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/header.html"
+      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota/data/header.html"
 editor_options:
   markdown:
     wrap: 72
@@ -320,7 +346,7 @@ cat("\n\n")
 ```
 ', id, nombre_paciente, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir,patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir)
 
-  rmd_file <- sprintf("%s/ReportResults_Biota_ID%s.Rmd", patient_dir, id)
+  rmd_file <- sprintf("%s/indice_MR_%s.Rmd", patient_dir, id)
   writeLines(rmd_content, con = rmd_file)
 
   id_mr <- str_pad(id, width = 4, side = "left", pad = "0")
@@ -334,12 +360,24 @@ cat("\n\n")
 
 ####################################################################
 ######################################################################
-
-contenido <- function(patient_dir, path_metadata) {
+#' @title Generate Results' Report - Section Contenido
+#' @description It generates the report in pdf format that register all the predictions and the analizes of the microbiome composition of a determined patient.
+#' @param patients_dir indicated the patient directory that will be analyzed.
+#' @param path_metadata path that indicates were the Metadata excel is located
+#' @export
+#' @import rmarkdown
+#' @import ggplot2
+#' @import kableExtra
+#' @import gridExtra
+#' @import readxl
+#' @import data.table
+#' @import openxlsx
+#' @import qpdf
+contenido_simple <- function(patient_dir, path_metadata) {
 
   id <- basename(patient_dir)
   patients_dir <- dirname(patient_dir)
-  MetadataB <- as.data.frame(read_excel("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/Metadata-soloColumnasUsables.xlsx"))
+  MetadataB <- as.data.frame(read_excel(sprintf("%s/Metadata-soloColumnasUsables.xlsx", pipe_data)))
   
   BIOTALIFE_SKIN_Respuestas_ <- read_excel(path_metadata)
   
@@ -407,7 +445,7 @@ contenido <- function(patient_dir, path_metadata) {
   #reportCountsTax(id=id, MetadataB = MetadataB, patients_dir = patients_dir, de_host = "Biota", conEukaryota = FALSE)
   #reportMasAbundantes(id = id, MetadataB = BIOTALIFE_SKIN_Respuestas_)
   reportMasAbundantes(patient_dir = patient_dir, MetadataB = MetadataB)
-  indicadorRangoEtario(id = id, MetadataB = MetadataB)
+  indicadorRangoEtario(patient_dir = patient_dir, MetadataB = MetadataB)
 
   #Armar recomendaciones: ------------------------------------------------------------------------
   out <- reportCountsTax(id = id, MetadataB = MetadataB, patients_dir = patients_dir,  de_host = "Bowtie", conEukaryota = FALSE)
@@ -419,10 +457,10 @@ contenido <- function(patient_dir, path_metadata) {
   out <- indicadorTipoPiel(patient_dir = patient_dir, MetadataB = MetadataB)
   dev_piel <- out[[4]]
 
-  out <- indicadorRangoEtario(id = id, MetadataB = MetadataB)
+  out <- indicadorRangoEtario(patient_dir = patient_dir, MetadataB = MetadataB)
   dev_edad <- out[[7]]
 
-  Recomendaciones <- as.data.frame(read_excel("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/topTax-Recomendaciones.xlsx", sheet=3))
+  Recomendaciones <- as.data.frame(read_excel(sprintf("%s/topTax-Recomendaciones.xlsx", pipe_data), sheet=3))
 
   mensaje_recomendaciones1 <- ""
   mensaje_recomendaciones3 <- ""
@@ -562,11 +600,11 @@ output:
   pdf_document:
     latex_engine: xelatex
     includes:
-      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/header.tex"
+      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota/data/header.tex"
   html_document:
     df_print: paged
     includes:
-      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/header.html"
+      in_header: "/media/4tb2/Daniela/Biota/PipelineBiota/data/header.html"
 editor_options:
   markdown:
     wrap: 72
@@ -624,7 +662,7 @@ if(grepl("menor", mensaje_cantidades) | grepl("cercana", mensaje_cantidades) | g
 png_barra <- sprintf("%s/rango_etario_barra.png", patient_dir)
 png_biomarcadores <- (sprintf("%s/PieChart_BiomarcadoresRangoEtario.png", patient_dir))
 
-out <- indicadorRangoEtario(id = id, MetadataB = MetadataB)
+out <- indicadorRangoEtario(patient_dir = patient_dir, MetadataB = MetadataB)
 rango_predicho <- out[[2]]
 plot_rango_real <- out[[3]]
 combined_plot <- out[[4]]
@@ -638,16 +676,16 @@ dev_piel <- out[[4]]
 png_tipopiel <- sprintf("%s/tipodepiel_barra.png", patient_dir)
 
 
-out <- indicadorVirus(id = id, MetadataB = MetadataB)
+out <- indicadorVirus(patient_dir = patient_dir, MetadataB = MetadataB)
 mensaje_virus <- out[[1]]
 dev_virus <- out[[2]]
 png_virus <- sprintf("%s/virus_barra.png", patient_dir)
 
-out <- indicadorFagos(id = id, MetadataB = MetadataB)
+out <- indicadorFagos(patient_dir = patient_dir, MetadataB = MetadataB)
 mensaje_fagos <- out[[1]]
 png_fagos <- sprintf("%s/fagos_barra.png", patient_dir)
 
-png_niveles <- "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/Niveles_tax2.png"
+png_niveles <- "/media/4tb2/Daniela/Biota/PipelineBiota/data/Niveles_tax2.png"
 
 
 ```
@@ -770,7 +808,7 @@ knitr::asis_output(paste0("### ",texto_contacto, "\n\n"))
 ```
 ', patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir,patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir, patient_dir)
 
-  rmd_file <- sprintf("%s/ReportResults_Biota_ID%s.Rmd", patient_dir, id)
+  rmd_file <- sprintf("%s/contenido_MR_%s.Rmd", patient_dir, id)
   writeLines(rmd_content, con = rmd_file)
 
   id_mr <- str_pad(id, width = 4, side = "left", pad = "0")

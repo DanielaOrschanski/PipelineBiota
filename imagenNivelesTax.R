@@ -3,7 +3,7 @@ library(ggplot2)
 
 
 # Definir los niveles, tamaños y colores
-niveles <- c("Filos",  "Clase", "Orden", "Familia", "Género", "Especie")
+niveles <- c("Filos",  "Clase", "Orden", "Familia", "Géneros", "Especies")
 anchos <- c(7, 6,5, 4, 3, 2)  # Anchos para cada nivel
 #colores <- c("#1f78b4", "#6baed6", "#c6dbef") # Tonos de azul
 colores <- c("#0d4c92","#1f78b4", "#4ab4de", "#76c7e8", "#99d6f0", "#c6dbef")
@@ -28,7 +28,7 @@ g <- ggplot(df, aes(x = 0, y = Posicion, fill = Nivel, width = Ancho)) +
   #coord_flip()
   theme(legend.position = "none")
 
-ggsave(g, file = "~/Daniela/Biota/PipelineBiota/data/Niveles_tax2.png", height = 1.2, width = 2.2)
+ggsave(g, file = sprintf("%s/Niveles_tax2.png", pipe_data), height = 1.2, width = 2.2)
 
 library(ggplot2)
 

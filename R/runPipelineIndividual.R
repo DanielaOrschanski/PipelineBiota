@@ -5,13 +5,13 @@
 #' @param patient_dir path to the directory of the patient you want to analyze. It must contain 2 files: ID_R1_fastq and ID_R2_fastq.
 #' @param runDRAGEN is logical. If it set to TRUE the analyzes will be generated with both KRAKEN and DRAGEN.
 #' @return path for 2 reports
-#' @examples RunPipelineIndividual(patient_dir = "~/Daniela/Biota/Muestras/73m/114")
+#' @examples RunPipelineIndividual(patient_dir = "/media/4tb2/Daniela/Biota/Muestras/180")
 #' @export
 
 RunPipelineIndividual <- function(patient_dir, runDRAGEN = FALSE) {
   id <- basename(patient_dir)
   print(id)
-  QCcontrol(patient_dir, de_host = "Bowtie")
+  QCcontrol(patient_dir, de_host = "Bowtie",  generate_QCReport_Individual = TRUE, generate_QCReport_Grupal = TRUE, FastQC_trimmed = FALSE)
 
   #KRAKEN ---------------------------------------------------------------------------
   RunKRAKEN(patient_dir, de_host = "Bowtie")
@@ -23,7 +23,7 @@ RunPipelineIndividual <- function(patient_dir, runDRAGEN = FALSE) {
   library(dplyr)
   #group_TaxonomicLevels(patients_dir = patient_dir, tabla_otus = kraken, source = "KRAKEN", de_host = "Bowtie", conEukaryota= FALSE)
 
-  simple_report_file <- generateSimpleReport(patient_dir = patient_dir, path_metadata = "/media/4tb2/Daniela/Biota/PipelineBiota-master/data/Metadata-Completa-SinLimpiar.xlsx")
+  simple_report_file <- generateSimpleReport(patient_dir = patient_dir, path_metadata = sprintf("%s/Metadata-Completa-SinLimpiar.xlsx", pipe_data))
   doctor_report_file <- generateCompleteReport(patient_dir = patient_dir)
   
   #DRAGEN -----------------------------------------------------------------

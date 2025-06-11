@@ -4,11 +4,11 @@
 #' @param folder_url is a url.
 #' @param local_folder is the path where all the folders will be taken from.
 #' @examples drive_folder_url <- "https://drive.google.com/drive/folders/1vcYZAqK74kxEZcZEe74bOQ_f9Hfu9nVW?usp=drive_link"
-#' uploadFolderDrive(local_folder =  "~/Daniela/Biota/Muestras/73m", drive_folder_url = drive_folder_url)
 #' @export
+#' @import googledrive
 
-library(googledrive)
 uploadFolderDrive <- function(local_folder, drive_folder_url) {
+  library(googledrive)
   # Obtén el ID de la carpeta de destino en Drive
   folder_id <- sub(".*/folders/(.*)\\?usp=drive_link", "\\1", drive_folder_url)
 

@@ -9,19 +9,20 @@
 #' @param MetadataB dataframe that contains the metadata information. id must be within Metadata$ID.
 #' @return mensaje_fagos (message with the prediction).
 #' @export
-indicadorFagos <- function(id, MetadataB) {
+indicadorFagos <- function(patient_dir, MetadataB) {
 
   nivel <- "Species"
-  Biomarcadores_Especies_abundantes <- as.data.frame(read_excel(sprintf("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/%sAbundantes_RangoEtario_sinoutliers.xlsx", nivel)))
+  Biomarcadores_Especies_abundantes <- as.data.frame(read_excel(sprintf("%s/%sAbundantes_RangoEtario_sinoutliers.xlsx", pipe_data, nivel)))
 
   #pedir id
   #id <- readline(prompt = "Ingrese el ID del paciente que desea analizar: ")
-  list_dirs <- list.dirs(patients_dir, recursive = FALSE, full.names = TRUE)
-  patient_dir <- path.expand(sprintf("%s/%s", patients_dir, id))
+  #list_dirs <- list.dirs(patients_dir, recursive = FALSE, full.names = TRUE)
+  #patient_dir <- path.expand(sprintf("%s/%s", patients_dir, id))
 
-  if(!(patient_dir %in% list_dirs)) {
-    return("This id is not on your patients folder")
-  }
+  id <- basename(patient_dir)
+  #if(!(patient_dir %in% list_dirs)) {
+  #  return("This id is not on your patients folder")
+  #}
 
   otus <-  read_excel(sprintf("%s/trimmed/Resultados_KRAKEN/TablaOTUS_%sBo_KRAKEN.xlsx", patient_dir, id))
   colnames(Biomarcadores_Especies_abundantes)[1] <- nivel

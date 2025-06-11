@@ -158,7 +158,7 @@ counts_Tax <- function(patients_dir, source, de_host, conEukaryota) {
 
 reportCountsTax <- function(id, MetadataB, patients_dir, de_host,  conEukaryota) {
 
-  Biomarcadores_Cantidades <- as.data.frame(read_excel(sprintf("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/Stats_Cantidades_RangoEtario.xlsx")))
+  Biomarcadores_Cantidades <- as.data.frame(read_excel(sprintf("%s/Stats_Cantidades_RangoEtario.xlsx", pipe_data)))
   colnames(Biomarcadores_Cantidades)[2] <- "Rango"
   colnames(Biomarcadores_Cantidades)[5] <- "Q1"
   colnames(Biomarcadores_Cantidades)[6] <- "Q3"

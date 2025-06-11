@@ -7,7 +7,7 @@ generar_p_por_categoria <- function(CPM_vias, de_host_file, nivel) {
   #Agrego metadata:
   CPM_viasT <- cbind("ID" = rownames(CPM_viasT), CPM_viasT)
 
-  MetadataB <- as.data.frame(read_excel("~/Daniela/Biota/PipelineBiota/data/Metadata-soloColumnasUsables.xlsx"))
+  MetadataB <- as.data.frame(read_excel(sprintf("%s/Metadata-soloColumnasUsables.xlsx", pipe_data)))
   MetadataB <- MetadataB[which(MetadataB$ID %in% CPM_viasT$ID),]
   all(CPM_viasT$ID %in% MetadataB$ID)
   all(CPM_viasT$ID == MetadataB$ID)

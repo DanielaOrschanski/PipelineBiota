@@ -21,11 +21,11 @@ title: "Reporte de Calidad de Muestra"
 output:
   pdf_document:
     includes:
-      in_header: ~/Daniela/Biota/PipelineBiota/data/header.tex
+      in_header: /media/4tb2/Daniela/Biota/PipelineBiota/data/header.tex
   html_document:
     df_print: paged
     includes:
-      in_header: ~/Daniela/Biota/PipelineBiota/data/header.html
+      in_header: /media/4tb2/Daniela/Biota/PipelineBiota/data/header.html
 editor_options:
   markdown:
     wrap: 72

@@ -13,21 +13,23 @@
 #' mensaje (message with the resolution), barra_plot (plot that will be included in the report).
 #' @export
 
-indicadorRangoEtario <- function(id, MetadataB) {
+indicadorRangoEtario <- function(patient_dir, MetadataB) {
 
-  Biomarcadores_RangoEtario <- read_excel("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/Biomarcadores_RangoEtario_sinoutliers.xlsx")
+  Biomarcadores_RangoEtario <- read_excel(sprintf("%s/Biomarcadores_RangoEtario_sinoutliers.xlsx", pipe_data))
 
   #pedir id
   #id <- readline(prompt = "Ingrese el ID del paciente que desea analizar: ")
-  list_dirs <- list.dirs(patients_dir, recursive = FALSE, full.names = TRUE)
-  patient_dir <- path.expand(sprintf("%s/%s", patients_dir, id))
-
-  if(!(patient_dir %in% list_dirs)) {
-    return("This id is not on your patients folder")
-  }
+  #list_dirs <- list.dirs(patients_dir, recursive = FALSE, full.names = TRUE)
+  #patient_dir <- path.expand(sprintf("%s/%s", patients_dir, id))
+  id <- basename(patient_dir)
+  print(id)
+  
+  #if(!(patient_dir %in% list_dirs)) {
+  #  return("This id is not on your patients folder")
+  #}
 
   otus <-  read_excel(sprintf("%s/trimmed/Resultados_KRAKEN/TablaOTUS_%sBo_KRAKEN.xlsx", patient_dir, id))
-  load("/media/4tb2/Daniela/Biota/PipelineBiota-master/data/SubSpecies_AUSAR.RData")
+  load(sprintf("%s/SubSpecies_AUSAR.RData", pipe_data))
 
   # me quedo con las 138 subespecies y calculo AR -------------------------
   otus_subespecies <- otus[which(otus$SubSpecies %in% subespecies_ausar),]

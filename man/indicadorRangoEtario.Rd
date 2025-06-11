@@ -4,12 +4,12 @@
 \alias{indicadorRangoEtario}
 \title{Indicador Rango Etario}
 \usage{
-indicadorRangoEtario(id, MetadataB)
+indicadorRangoEtario(patient_dir, MetadataB)
 }
 \arguments{
-\item{id}{patient's id}
-
 \item{MetadataB}{dataframe that contains the metadata information. id must be within Metadata$ID.}
+
+\item{id}{patient's id}
 }
 \value{
 list with df_rango_real (dataframe with comparison of relative abundances within the biological age),
